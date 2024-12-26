@@ -1,0 +1,18 @@
+name: DAST Analysis
+on: [push, pull_request]
+
+jobs:
+  dast:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Application (Docker)
+        run: |
+          docker build -t secure-pipeline-app .
+          docker run -d -p 5000:5000 --name app secure-pipeline-app
+
+      - name: Run OWASP ZAP
+        uses: zapbot/zap-full-scan-action@v1
+        with:
+          target: "http://localhost:5000"
+          rules_file_name: zap-rules.txt

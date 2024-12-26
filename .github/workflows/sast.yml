@@ -1,0 +1,19 @@
+name: SAST Analysis
+on: [push, pull_request]
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/init@v2
+        with:
+          languages: python
+
+      - name: Perform Analysis
+        uses: github/codeql-action/analyze@v2
+

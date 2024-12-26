@@ -1,0 +1,16 @@
+name: Dependency Scan
+on: [push, pull_request]
+
+jobs:
+  dependency-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run OWASP Dependency-Check
+        uses: dependency-check/action@v2.1.0
+        with:
+          project: "secure-pipeline-app"
+          scan: "./"
